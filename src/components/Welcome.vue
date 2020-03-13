@@ -158,7 +158,7 @@
               </el-row>
             </div>
 
-            <router-link to="/Panel" style="color:black;text-decoration: none;">
+            <router-link to="/Panel/Upload" style="color:black;text-decoration: none;">
               <div style="font-size:35px;margin-bottom: 10%">
                 立即尝试
                 <img src="../assets/right.jpg" width="25px" height="auto" style="margin-left:10px">

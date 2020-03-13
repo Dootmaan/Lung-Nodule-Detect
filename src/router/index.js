@@ -7,7 +7,8 @@ import Help from '../components/Help'
 import Upload from '../components/Upload'
 import PanelHelp from '../components/PanelHelp'
 import Settings from '../components/Settings'
-import History from '../components/History'
+import Upload_History from '../components/Upload_History'
+import Result from '../components/Result'
 
 Vue.use(Router)
 
@@ -35,7 +36,11 @@ export default new Router({
                 },
                 {
                     path:'History',
-                    component:History
+                    component:Upload_History
+                },
+                {
+                    path:'Result',
+                    component:Result
                 }
             ]
         },

@@ -161,7 +161,7 @@
               <i class="el-icon-upload2"></i>
               <span slot="title">上传图像</span>
             </el-menu-item>
-            <el-menu-item index="/Panel/Learning_result" :disabled="this.api.fileId==''">
+            <el-menu-item index="/Panel/Result" :disabled="this.api.fileId==''">
               <i class="el-icon-data-analysis"></i>
               <span slot="title">结节定位</span>
             </el-menu-item>
@@ -176,9 +176,9 @@
           </el-menu>
         </el-aside>
         <el-main style="height:100%;margin-top: 30px">
-          <keep-alive>
+          <!-- <keep-alive> -->
             <router-view></router-view>
-          </keep-alive>
+          <!-- </keep-alive> -->
         </el-main>
       </el-container>
     </el-container>
