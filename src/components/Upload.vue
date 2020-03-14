@@ -40,7 +40,7 @@
           <el-container>
             <el-main
               v-loading="loading"
-              element-loading-text="正在进行图像预处理，请耐心等待"
+              element-loading-text="正在处理图像，请耐心等待"
               element-loading-spinner="el-icon-loading"
               element-loading-background="rgba(255, 255, 255, 0.8)"
             >

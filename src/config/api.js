@@ -9,6 +9,7 @@ const API = {
     resultAPI:IP_PORT+'file/result/',
     // xmlAPI: IP_PORT + 'file/xml/',
     patientAPI: IP_PORT + 'patient/edit/',
+    checkOriginAPI: IP_PORT+'file/origin/',
     patientInfoAPI: IP_PORT + 'patient/patientInfo/',
     historyAPI: IP_PORT + 'file/history/',
     // prognosisAPI: IP_PORT + 'diag/prognosis/',
