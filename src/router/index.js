@@ -9,6 +9,10 @@ import PanelHelp from '../components/PanelHelp'
 import Settings from '../components/Settings'
 import Upload_History from '../components/Upload_History'
 import Result from '../components/Result'
+import Manage from '../components/Manage'
+import OverallManage from '../components/OverallManage'
+import UserManage from '../components/UserManage'
+import FileManage from '../components/FileManage'
 
 Vue.use(Router)
 
@@ -41,6 +45,24 @@ export default new Router({
                 {
                     path:'Result',
                     component:Result
+                }
+            ]
+        },
+        {
+            path:'/Manage',
+            component:Manage,
+            children:[
+                {
+                    path:'Overall',
+                    component:OverallManage
+                },
+                {
+                    path:'UserManage',
+                    component:UserManage
+                },
+                {
+                    path:'FileManage',
+                    component:FileManage
                 }
             ]
         },

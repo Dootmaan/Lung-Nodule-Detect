@@ -72,6 +72,9 @@
           @click="gotoIntro" v-if="intro">
           <el-divider direction="vertical" style="float:left; height:100px"></el-divider>返回主页
         </span>
+        <span style="font-size:20px;margin-left: 1%;float:left;margin-top:30px;margin-left: 2%;cursor: pointer;" @click="gotoManage" v-if="this.api.userId=='root'">
+          <el-divider direction="vertical" style="float:left; height:100px"></el-divider>平台管理
+        </span>
       </el-header>
       <!-- <div> -->
       <transition name="outroduction">
@@ -216,6 +219,9 @@
     components: {},
     mounted() { },
     methods: {
+      gotoManage(){
+        this.$router.push("/Manage/Overall")
+      },
       toPanel() {
         this.$router.push("/Panel/Upload");
       },
