@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-left: 20px；margin-bottom:20px;text-align:left">
-      <el-button @click="toggleSelection()" type="danger" icon="el-icon-delete">删除所选</el-button>
+      <el-button @click="deleteFiles()" type="danger" icon="el-icon-delete">删除所选</el-button>
       <el-button @click="getAllFile()" type="primary" icon="el-icon-refresh-left">刷新信息</el-button>
       <el-button @click="toggleSelection()" icon="el-icon-close">取消选择</el-button>
     </div>
@@ -31,8 +31,7 @@ export default {
   name: "",
   data() {
     return {
-      tableData: [
-      ],
+      tableData: [],
       multipleSelection: []
     };
   },
@@ -50,6 +49,7 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
+      window.console.log(this.multipleSelection)
     },
     getAllFile() {
       this.$axios
@@ -73,7 +73,37 @@ export default {
         });
     },
     deleteFiles(){
-
+      var selected_files=[]
+      for(var i=0;i<this.multipleSelection.length;i++){
+        var file=this.multipleSelection[i]
+        selected_files.push(file["id"])
+      }
+      console.log(selected_files)
+      this.$axios
+        .post(
+          this.api.filedelAPI,
+          this.qs.stringify({
+            fileId: this.qs.stringify(selected_files)
+          })
+        )
+        .then(response => {
+          if (response.data.status === 200) {
+            console.log(response.data);
+            this.$message.success("删除操作成功");
+            //现在登录将会导致fileId消失，菜单被禁用。可以在这里让它跳转到Upload，但更好的方法是让fileId不会掉
+            this.getAllFile();
+          } else {
+            this.$message.error("删除操作失败");
+          }
+          // window.console.log(response.data);
+        })
+        .catch(error => {
+          this.$message({
+            message: "服务器错误",
+            type: "warning"
+          });
+          window.console.log(error);
+        });
     },
   },
   created() {
