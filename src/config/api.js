@@ -17,6 +17,7 @@ const API = {
     allUserAPI:IP_PORT + 'admin/users/',
     userdelAPI:IP_PORT + 'admin/userdel/',
     filedelAPI:IP_PORT + 'admin/filedel/',
+    formatAPI:IP_PORT + 'file/format/',
     // prognosisAPI: IP_PORT + 'diag/prognosis/',
     // reportAPI: IP_PORT + 'report/result/',
     // suggestAPI: IP_PORT + 'report/suggest/',

@@ -13,6 +13,8 @@ import Manage from '../components/Manage'
 import OverallManage from '../components/OverallManage'
 import UserManage from '../components/UserManage'
 import FileManage from '../components/FileManage'
+import Format from '../components/Format'
+import Error404 from '../components/Error404'
 
 Vue.use(Router)
 
@@ -45,6 +47,10 @@ export default new Router({
                 {
                     path:'Result',
                     component:Result
+                },
+                {
+                    path:'Format',
+                    component:Format
                 }
             ]
         },
@@ -69,6 +75,10 @@ export default new Router({
         {
             path:'/Help',
             component:Help
+        },
+        {
+            path:'/*',
+            component:Error404
         },
     ]
 })

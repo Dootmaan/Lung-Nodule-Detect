@@ -165,6 +165,10 @@
               <i class="el-icon-data-analysis"></i>
               <span slot="title">结节定位</span>
             </el-menu-item>
+            <el-menu-item index="/Panel/Format">
+              <i class="el-icon-refresh"></i>
+              <span slot="title">格式转换</span>
+            </el-menu-item>
             <el-menu-item index="/Panel/History" key="5">
               <i class="el-icon-time"></i>
               <span slot="title">查看历史</span>
