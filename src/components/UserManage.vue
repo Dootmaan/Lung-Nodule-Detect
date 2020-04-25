@@ -4,19 +4,24 @@
       <el-button @click="deleteUsers()" type="danger" icon="el-icon-delete">删除所选</el-button>
       <el-button @click="getAllUser()" type="primary" icon="el-icon-refresh-left">刷新信息</el-button>
       <el-button @click="toggleSelection()" icon="el-icon-close">取消选择</el-button>
+            <el-input
+          v-model="search"
+          placeholder="搜索用户账号"
+          style="float:right;width:240px" />
     </div>
     <el-table
+      :data="tableData.filter(data => !search || data.phone.toLowerCase().includes(search.toLowerCase()))"
       ref="multipleTable"
-      :data="tableData"
       tooltip-effect="dark"
       style="width: 100%"
       @selection-change="handleSelectionChange"
+      :default-sort = "{prop: 'phone', order: 'descending'}"
     >
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="id" label="用户ID" width="160"></el-table-column>
-      <el-table-column prop="type" label="用户类型" width="120"></el-table-column>
-      <el-table-column prop="phone" label="用户账号名"></el-table-column>
-      <el-table-column prop="name" label="用户昵称（可以为空）" width="240" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="id" label="用户ID" width="160" sortable></el-table-column>
+      <el-table-column prop="type" label="用户类型" width="120" sortable></el-table-column>
+      <el-table-column prop="phone" label="用户账号名" sortable></el-table-column>
+      <el-table-column prop="name" label="用户昵称（可以为空）" width="240" show-overflow-tooltip sortable></el-table-column>
     </el-table>
   </div>
 </template>
@@ -27,7 +32,8 @@ export default {
   data() {
     return {
       tableData: [],
-      multipleSelection: []
+      multipleSelection: [],
+      search:'',
     };
   },
   components: {},
@@ -68,6 +74,13 @@ export default {
     },
     deleteUsers(){
       var selected_users=[]
+      if(this.multipleSelection.length<1){
+        this.$message({
+            message: "请至少选择一项",
+            type: "error"
+          });
+        return;
+      }
       for(var i=0;i<this.multipleSelection.length;i++){
         var user=this.multipleSelection[i]
         selected_users.push(user["id"])

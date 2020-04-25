@@ -165,6 +165,10 @@
               <i class="el-icon-data-analysis"></i>
               <span slot="title">结节定位</span>
             </el-menu-item>
+            <el-menu-item index="/Panel/Report" :disabled="this.api.fileId==''">
+              <i class="el-icon-document"></i>
+              <span slot="title">诊断报告</span>
+            </el-menu-item>
             <el-menu-item index="/Panel/Format">
               <i class="el-icon-refresh"></i>
               <span slot="title">格式转换</span>

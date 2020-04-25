@@ -15,6 +15,7 @@ import UserManage from '../components/UserManage'
 import FileManage from '../components/FileManage'
 import Format from '../components/Format'
 import Error404 from '../components/Error404'
+import Report from '../components/Report'
 
 Vue.use(Router)
 
@@ -51,6 +52,10 @@ export default new Router({
                 {
                     path:'Format',
                     component:Format
+                },
+                {
+                    path:'Report',
+                    component:Report
                 }
             ]
         },
