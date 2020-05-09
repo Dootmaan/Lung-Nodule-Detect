@@ -7,7 +7,7 @@
           <p>No.{{this.api.fileId}}</p>
           <p style="line-height:0px">
             <span style="font-size:8px">powered by &nbsp;</span>
-            <i>Liver AI</i>
+            <i>Lung AI</i>
           </p>
         </div>
       </div>
@@ -64,7 +64,7 @@
         <table>
           <tr>
             <td>
-              <el-image style="width: 220px; height: 120px;" :src="patientInfo.image1" fit="cover">
+              <el-image style="width: 220px; height: 220px;" :src="patientInfo.image1" fit="cover">
                 <div slot="placeholder" class="image-slot">
                   加载中
                   <span class="dot">...</span>
@@ -72,25 +72,7 @@
               </el-image>
             </td>
             <td>
-              <el-image style="width: 220px; height: 120px;" :src="patientInfo.image2" fit="cover">
-                <div slot="placeholder" class="image-slot">
-                  加载中
-                  <span class="dot">...</span>
-                </div>
-              </el-image>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <el-image style="width: 220px; height: 120px;" :src="patientInfo.image3" fit="cover">
-                <div slot="placeholder" class="image-slot">
-                  加载中
-                  <span class="dot">...</span>
-                </div>
-              </el-image>
-            </td>
-            <td>
-              <el-image style="width: 220px; height: 120px;" :src="patientInfo.image4" fit="cover">
+              <el-image style="width: 220px; height: 220px;" :src="patientInfo.image2" fit="cover">
                 <div slot="placeholder" class="image-slot">
                   加载中
                   <span class="dot">...</span>
@@ -130,15 +112,202 @@
 export default {
   name: "",
   data() {
-    return {};
+    return {
+      patientInfo: {
+        reportSuggest: "",
+        patientGender: 0,
+        patientBirthDate: "",
+        patientName: "",
+        patientId: "",
+        fileUploadDate: "",
+        reportUpdateDate: "",
+        reportResult: "",
+        image1: "",
+        image2: "",
+      }
+    };
   },
   components: {},
   mounted() {},
-  methods: {}
+  methods: {
+    getReport() {
+      this.$axios
+        .post(
+          this.api.reportAPI,
+          this.qs.stringify({
+            fileId: this.api.fileId
+          })
+        )
+        .then(response => {
+          this.patientInfo = response.data.data;
+          window.console.log(response.data);
+        })
+        .catch(error => {
+          window.console.log(error);
+        });
+    },
+    addSuggest() {
+      this.$axios
+        .post(
+          this.api.patientAPI,
+          this.qs.stringify({
+            fileId: this.api.fileId,
+            patientName: this.patientInfo.patientName,
+            patientGender: this.patientInfo.patientGender,
+            patientBirthDate: this.patientInfo.patientBirthDate
+          })
+        )
+        .then(response => {
+          if (response.data.status == 200) {
+            this.$axios
+              .post(
+                this.api.suggestAPI,
+                this.qs.stringify({
+                  fileId: this.api.fileId,
+                  reportSuggest: this.patientInfo.reportSuggest
+                })
+              )
+              .then(response2 => {
+                if (response2.data.status == 200) {
+                  this.$notify({
+                    title: "提示",
+                    message: "操作成功",
+                    type: "success",
+                    position: "bottom-left"
+                    // duration: 0,
+                    // offset: 10
+                  });
+                } else {
+                  this.$notify.error({
+                    title: "提示",
+                    message: "诊断意见添加失败",
+                    position: "bottom-left"
+                    // duration: 0,
+                    // offset: 10
+                  });
+                }
+                // window.console.log(response.data);
+              });
+          } else {
+            this.$notify.error({
+              title: "提示",
+              message: "信息提交失败",
+              position: "bottom-left"
+              // duration: 0,
+              // offset: 10
+            });
+          }
+        })
+        .catch(error => {
+          this.$notify({
+            title: "提示",
+            message: "服务器错误",
+            position: "bottom-left",
+            type: "warning"
+            // duration: 0,
+            // offset: 10
+          });
+          window.console.log(error);
+        });
+
+      // if (this.serverError) {
+      //   this.$message({
+      //     message: "服务器发生错误",
+      //     type: "warning"
+      //   });
+      // }
+
+      // if (this.updateInfoSuccess && this.updateSuggestSuccess) {
+      //   this.$notify({
+      //     title: "提示",
+      //     message: "操作成功",
+      //     type: "success",
+      //     position: "bottom-left"
+      //     // duration: 0,
+      //     // offset: 10
+      //   });
+      // } else if (!this.updateInfoSuccess && this.updateSuggestSuccess ) {
+      //   this.$notify({
+      //     title: "提示",
+      //     message: "诊断意见添加成功，但病人信息更新失败",
+      //     type: "warning",
+      //     position: "bottom-left"
+      //     // duration: 0,
+      //     // offset: 10
+      //   });
+      // } else if (this.updateInfoSuccess  && !this.updateSuggestSuccess) {
+      //   this.$notify({
+      //     title: "提示",
+      //     message: "病人信息更新成功，但诊断意见添加失败",
+      //     type: "warning",
+      //     position: "bottom-left"
+      //     // duration: 0,
+      //     // offset: 10
+      //   });
+      // } else {
+      //   this.$notify.error({
+      //     title: "提示",
+      //     message: "操作失败",
+      //     position: "bottom-left"
+      //     // duration: 0,
+      //     // offset: 10
+      //   });
+      // }
+    },
+    downloadReport() {
+      this.$axios
+        .post(
+          this.api.downloadAPI,
+          this.qs.stringify({
+            fileId: this.api.fileId
+          }),
+          {
+            responseType: "blob"
+          }
+        )
+        .then(response => {
+          window.console.log(response.headers);
+          const contentDisposition = response.headers["content-disposition"];
+          const filename = decodeURI(
+            contentDisposition.split("fileName=")[1] ||
+              contentDisposition.split("filename=")[1]
+          );
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", filename);
+          document.body.appendChild(link);
+          link.click();
+        })
+        .catch(error => {
+          window.console.log(error);
+        });
+    },
+    doPrognosis() {
+      //TODO：将该函数接入到“预后分析”按钮上
+      this.$axios
+        .post(
+          this.api.prognosisAPI,
+          this.qs.stringify({
+            fileId: this.api.fileId
+          })
+        )
+        .then(response => {
+          this.getReport();
+          window.console.log(response.data);
+        })
+        .catch(error => {
+          window.console.log(error);
+        });
+    }
+  },
+  created() {
+    this.doPrognosis();
+  }
 };
 </script>
 
-<style scoped>
+<style>
 #report-bg {
   text-align: center;
   /* background-color: #333; */
@@ -236,6 +405,10 @@ export default {
 
 #report .el-input__suffix {
   display: none;
+}
+
+#report .el-date-editor {
+  background: transparent;
 }
 
 /*医学图*/

@@ -8,7 +8,7 @@
     </el-dialog>
 
     <el-dialog title="修改患者信息" :visible.sync="editInfoVisible">
-      <el-form :model="form" label-position="right">
+      <el-form label-position="right">
         <el-form-item label="患者姓名" :label-width="formLabelWidth">
           <el-input v-model="new_patient_info.name" autocomplete="off" style="width:70%"></el-input>
         </el-form-item>
@@ -88,6 +88,7 @@ export default {
       origin_url:"",
       checkOriginVisible:false,
       editInfoVisible:false,
+      formLabelWidth: "120px",
     };
   },
   components: {},
