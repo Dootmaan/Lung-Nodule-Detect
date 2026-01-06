@@ -1,0 +1,29 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    # Allow up to 5 open pull requests for npm dependencies
+    open-pull-requests-limit: 5
+    # Add reviewers and assignees
+    reviewers:
+      - "Dootmaan"
+    # Group updates by dependency type
+    groups:
+      development-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+      production-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "patch"
+    # Prefix commit messages
+    commit-message:
+      prefix: "npm"
+      include: "scope"
