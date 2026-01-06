@@ -22,6 +22,7 @@ updates:
       production-dependencies:
         dependency-type: "production"
         update-types:
+          - "minor"
           - "patch"
     # Prefix commit messages
     commit-message:
